@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ssafy.vue.dao.HouseDao">
+
+	<!--  전체 조회 -->
+	<select id="searchAllDealinfo" resultType="housedeal">
+		select *
+		  from housedeal
+		  LIMIT 10
+	</select>
+	
+	<!-- 상세 조회 -->
+	<select id="search" resultType="housedeal">
+		select *
+		  from housedeal 
+		 where no = #{no}
+	</select>
+
+
+    <select id="selectDetail" parameterType="String" resultType="housedeal">
+         select *
+         from housedeal
+         <choose>
+        <when test="key == null">
+       
+        </when>
+        
+        <when test="key == 'dong'">
+             WHERE dong LIKE CONCAT('%', #{word},'%')
+       </when>
+       <otherwise>
+             WHERE AptName LIKE CONCAT('%', #{word},'%')
+       </otherwise>
+       </choose>
+         LIMIT 10
+    </select>
+
+    
+</mapper>
